@@ -1,20 +1,24 @@
 {% extends '_layout.html' %} {%block content%}
 <h1 style="margin: 5vh 0 5vh 5vw">Sign Up</h1>
-<form action="" style="margin: 0 0 0 5vw;">
+<form
+  action="{{url_for('users.create')}}"
+  method="POST"
+  style="margin: 0 0 0 5vw;"
+>
   <div style="display: flex; flex-direction: column;">
-    <label for="">Email</label>
-    <input type="email" name="email_input" style="width: 60vw" />
-  </div>
-  <div style="display: flex; flex-direction: column;">
-    <label for="">Name</label>
+    <label for="name_input">Name</label>
     <input type="text" name="name_input" style="width: 60vw" />
   </div>
   <div style="display: flex; flex-direction: column;">
-    <label for="">Username</label>
+    <label for="email_input">Email</label>
+    <input type="email" name="email_input" style="width: 60vw" />
+  </div>
+  <div style="display: flex; flex-direction: column;">
+    <label for="username_input">Username</label>
     <input type="text" name="username_input" style="width: 60vw;" />
   </div>
   <div style="display: flex; flex-direction: column;">
-    <label for="">Password</label>
+    <label for="password_input">Password</label>
     <input type="password" name="password_input" style="width: 60vw" />
   </div>
   <button

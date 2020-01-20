@@ -1,7 +1,9 @@
 import os
 import config
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from models.base_model import db
+from models import *
+
 
 web_dir = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), 'instagram_web')
@@ -28,8 +30,4 @@ def _db_close(exc):
 @app.route("/sign-up")
 def user_sign_up():
     return render_template('users/new.html')
-
-# @app.route("/new_user")
-# def new_user():
-
 
