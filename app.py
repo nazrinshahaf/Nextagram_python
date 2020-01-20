@@ -1,6 +1,6 @@
 import os
 import config
-from flask import Flask
+from flask import Flask, render_template
 from models.base_model import db
 
 web_dir = os.path.join(os.path.dirname(
@@ -18,10 +18,18 @@ else:
 def before_request():
     db.connect()
 
-
 @app.teardown_request
 def _db_close(exc):
     if not db.is_closed():
         print(db)
         print(db.close())
     return exc
+
+@app.route("/sign-up")
+def user_sign_up():
+    return render_template('users/new.html')
+
+# @app.route("/new_user")
+# def new_user():
+
+
