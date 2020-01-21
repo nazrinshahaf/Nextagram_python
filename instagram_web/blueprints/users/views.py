@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template,request,url_for,redirect, flash
 from werkzeug.security import generate_password_hash
 from models import *
-
+from flask_wtf.csrf import CSRFProtect
 
 
 users_blueprint = Blueprint('users',

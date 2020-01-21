@@ -1,4 +1,8 @@
-{% extends "_layout.html" %} {% block title %} Homepage {% endblock %} {% block
-header %} {% endblock %} {% block content %}
-<h1>Homepage</h1>
-{% endblock %}
+{% extends "_layout.html" %} {% block title %} {% endblock %} {% block content
+%}
+
+<h1 style="margin: 0 0 0 5vw;">This is the Homepage</h1>
+
+{% if current_user.is_authenticated %}
+<p style="margin: 2vh 0 0 5vw;">Hi {{ current_user.name }}!</p>
+{% endif %} {% endblock %}
