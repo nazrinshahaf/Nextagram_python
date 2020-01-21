@@ -16,8 +16,14 @@
     <link rel="stylesheet" href="{{ ASSET_URL }}" />
     {% endassets %} {% assets "home_js" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-    {% endassets %} {% block header %}
+    {% endassets %} {% block header %} {% endblock %}
 
+    <title>
+      {% block title %} {% endblock %}Nextagram
+    </title>
+  </head>
+  <body>
+    {% block navbar %}
     <nav
       style="display: flex; flex-direction: row;padding: 2vh 2vw 1vh 2vw; justify-content: space-between;"
     >
@@ -28,24 +34,32 @@
       </div>
       <div style="display: flex; flex-direction: row;">
         {% if current_user.is_authenticated %}
-        <a href="">
-          <p>Sign out</p>
-        </a>
+        <a href=""><p style="margin: 0 2vw 0 0;">My Profile</p></a>
+
+        <form action="{{url_for('sessions.delete')}}" method="POST">
+          <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+          <button
+            type="submit"
+            style="margin: 0; border: none; color: #007BFF; cursor: pointer;"
+          >
+            <p>Sign out</p>
+          </button>
+        </form>
+
         {%else %}
         <a href="{{url_for('sessions.new')}}">
-          <p>Sign in</p>
+          <p style="margin: 0 2vw 0 0;">Login</p>
+        </a>
+        <a href="{{url_for('users.new')}}">
+          <p>Sign Up</p>
         </a>
         {% endif%}
       </div>
     </nav>
-    {% endblock %}
-
-    <title>
-      {% block title %} {% endblock %}NEXTAGRAM
-    </title>
-  </head>
-  <body>
-    {% block content %} {% endblock %}
+    {% endblock %} {% with messages = get_flashed_messages() %} {% if messages
+    %} {% for message in messages %}
+    <p style="margin: 2vh 0 0 5vw; color: #ed4956;">{{ message }}</p>
+    {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
     <!-- <footer>
       Made with &hearts; at
       <a

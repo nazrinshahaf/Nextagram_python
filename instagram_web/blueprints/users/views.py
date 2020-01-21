@@ -2,6 +2,7 @@ from flask import Blueprint, render_template,request,url_for,redirect, flash
 from werkzeug.security import generate_password_hash
 from models import *
 from flask_wtf.csrf import CSRFProtect
+from flask_login import login_user
 
 
 users_blueprint = Blueprint('users',
@@ -25,7 +26,8 @@ def create():
 
     if new_user.save():
         # return redirect(url_for('users.index')) #use when done with signup 
-        return redirect(url_for('users.new'))
+        login_user(new_user)
+        return redirect(('/'))
     else:
         for e in new_user.errors:
             flash(e)
