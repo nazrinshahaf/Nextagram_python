@@ -21,11 +21,10 @@ def create():
     username_input = request.form.get('username_input')
     password_input = request.form.get('password_input')
     
-    hashed_password_input = generate_password_hash(password_input)
-    
-    new_user = user.User(name=name_input, email=email_input, username=username_input, password=hashed_password_input)
+    new_user = user.User(name=name_input, email=email_input, username=username_input, password=password_input)
 
     if new_user.save():
+        # return redirect(url_for('users.index')) #use when done with signup 
         return redirect(url_for('users.new'))
     else:
         for e in new_user.errors:
