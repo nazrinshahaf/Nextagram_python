@@ -1,20 +1,11 @@
 {% extends '_layout.html' %} {%block content%}
-<h1 style="margin: 5vh 0 5vh 5vw; font-size: 45px;">Sign Up</h1>
+<h1 style="margin: 5vh 0 5vh 5vw; font-size: 45px;">Login</h1>
 
 <form
-  action="{{url_for('users.create')}}"
+  action="{{url_for('sessions.create')}}"
   method="POST"
   style="margin: 0 0 0 5vw;"
 >
-  <div style="display: flex; flex-direction: column;">
-    <label for="name_input">Name</label>
-    <input type="text" name="name_input" style="width: 60vw" />
-  </div>
-  <div style="display: flex; flex-direction: column;">
-    <label for="email_input">Email</label>
-    <input type="email" name="email_input" style="width: 60vw" />
-    <!-- change type back to email  -->
-  </div>
   <div style="display: flex; flex-direction: column;">
     <label for="username_input">Username</label>
     <input type="text" name="username_input" style="width: 60vw;" />
@@ -30,7 +21,6 @@
     Create
   </button>
 </form>
-
 {% with messages = get_flashed_messages() %} {% if messages %} {% for message in
 messages %}
 <p style="margin: 2vh 0 0 5vw; color: #ed4956;">{{ message }}</p>

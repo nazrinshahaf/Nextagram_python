@@ -47,6 +47,7 @@ class User(BaseModel):
         # password special character validation
         elif re.serch('[!\"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~]',self.password) is None:
             self.errors.append("Password should contain at least one special character")
+        # else hashed password in database
         else:
             self.password = generate_password_hash(self.password)
              

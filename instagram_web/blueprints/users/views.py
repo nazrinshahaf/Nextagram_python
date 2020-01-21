@@ -31,6 +31,7 @@ def create():
             flash(e)
         return render_template('users/new.html', email_input=email_input, name_input=name_input,password_input=password_input,username_input=username_input, errors=new_user.errors)
 
+
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
     pass
