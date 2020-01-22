@@ -4,8 +4,6 @@ from werkzeug.security import generate_password_hash
 from flask_login import UserMixin,current_user, login_user
 import re
 
-
-
 class User(BaseModel,UserMixin):
     name = pw.CharField(unique=False, null=True)
     username = pw.CharField(unique=True, null=True)

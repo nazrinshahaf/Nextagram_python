@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template,request,url_for,redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from models import *
 from flask_wtf.csrf import CSRFProtect
 from flask_login import login_user,current_user
+from helpers import *
 
 
 users_blueprint = Blueprint('users',
@@ -87,3 +89,35 @@ def edit_password():
         flash('Wrong password')
         return render_template('users/edit_password.html')
         
+
+@users_blueprint.route('/test', methods=["GET"])
+def profile():
+    return render_template('users/test.html')
+
+@users_blueprint.route('/test', methods=["POST"])
+def upload():
+    
+    file = request.files['user_file']
+    if "user_file" not in request.files:
+        return "No user_file key in request.files"
+    
+    # # file = request.files.get('upload_image')
+
+    # breakpoint()
+    if file.filename == "":
+        return "Please select a file"
+
+    if file and allowed_file(file.filename):
+        file.filename = secure_filename(file.filename)
+        output = upload_file_to_s3(file,S3_BUCKET)
+        return str(output)
+        
+    else:
+        return redirect(url_for('home'))
+
+
+    
+    
+
+
+    
