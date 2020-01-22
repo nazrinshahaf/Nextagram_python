@@ -1,0 +1,35 @@
+{% extends "_layout.html" %} {% block navbar%} {%endblock%} {%block content%}
+<h1 style="margin: 10vh 0 0 5vw ;">
+  Edit Profile
+</h1>
+<form action="{{url_for('users.edit')}}" method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+  <div style="display: flex; flex-direction: column; margin: 3vh 0 0 5vw;">
+    <p style="margin: 2vh 0 0 0;">Current Email :</p>
+    <label for="email_edit_input" style="margin: 2vh 0 0 4.5vw;"></label>
+    <input
+      type="email"
+      name="email_edit_input"
+      placeholder="{{current_user.email}}"
+      style="border: none; width: 40vw;"
+      value="{{current_user.email}}"
+    />
+    <p style="margin: 2vh 0 0 0;">Current Username :</p>
+
+    <label for="email_edit_input" style="margin: 2vh 0 0 4.5vw;"></label>
+    <input
+      type="text"
+      name="username_edit_input"
+      placeholder="{{current_user.username}}"
+      style="border: none; width: 40vw;"
+      value="{{current_user.username}}"
+    />
+    <button
+      type="submit"
+      style=" margin:3vh 0 0 0;width: 12vw; height:4.5vh;border-radius: 4px;cursor: pointer;background-color: #3897f0; color: white;border: none;"
+    >
+      Edit
+    </button>
+  </div>
+</form>
+{%endblock%}
