@@ -34,5 +34,3 @@ def create():
         else:
             flash('Wrong username or password')
             return render_template('sessions/new.html', username_input= username_input)
-
- 

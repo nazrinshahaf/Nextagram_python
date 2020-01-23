@@ -16,13 +16,29 @@
     Edit
   </button>
 
-  <form action="{{url_for('users.user_images')}}">
+  <form action="{{url_for('users.images')}}">
     <button
       style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 5vh 0 0 5vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
     >
       Upload
     </button>
   </form>
+</div>
+
+<div style="margin: 5vh 0 0 0;">
+  <div
+    style="display: flex;flex-direction: row; justify-content: space-around; margin: auto;"
+  >
+    {%for i in images%}
+    <div>
+      <img
+        src="{{i.image}}"
+        alt=""
+        style="width: 30vw;height: 30vw; margin: 1vw; object-fit: cover;"
+      />
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
 {%endblock%}

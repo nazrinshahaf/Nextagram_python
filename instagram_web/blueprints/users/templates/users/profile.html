@@ -11,4 +11,20 @@
   </p>
 </div>
 
+<div style="margin: 5vh 0 0 0;">
+  <div
+    style="display: flex;flex-direction: row; justify-content: space-around; margin: auto;"
+  >
+    {%for i in images%}
+    <div>
+      <img
+        src="{{i.image}}"
+        alt=""
+        style="width: 30vw;height: 30vw; margin: 1vw; object-fit: cover;"
+      />
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {%endblock%}
