@@ -90,11 +90,14 @@ def edit_password():
         return render_template('users/edit_password.html')
         
 
-@users_blueprint.route('/test', methods=["GET"])
+@users_blueprint.route('/profile_image', methods=["GET"])
 def profile():
-    return render_template('users/test.html')
+    if current_user.is_active:
+        return render_template('users/profile_image.html')
+    else:
+        return redirect(url_for('home'))
 
-@users_blueprint.route('/test', methods=["POST"])
+@users_blueprint.route('/profile_image', methods=["POST"])
 def upload():
     
     if "user_file" not in request.files:

@@ -29,7 +29,7 @@
       style="display: flex; flex-direction: row;padding: 2vh 2vw 1vh 2vw; justify-content: space-between;"
     >
       <div style="display: flex; flex-direction: row;">
-        <a href="{{('')}}">
+        <a href="{{url_for('home')}}">
           <p style="cursor: pointer;">Home instagram icon</p>
         </a>
       </div>
@@ -43,10 +43,15 @@
           <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
           <button
             type="submit"
-            style="margin: 0; border: none; color: #007BFF; cursor: pointer;"
+            style="margin: 0 1vw 0 0 ; border: none; color: #007BFF; cursor: pointer;"
           >
             <p>Sign out</p>
           </button>
+          <img
+            src="{{current_user.profile_image}}"
+            alt="Profiel image"
+            style="width: 30px; height: 30px; border-radius: 50%; margin: 0 0vw 0 0;"
+          />
         </form>
 
         {%else %}

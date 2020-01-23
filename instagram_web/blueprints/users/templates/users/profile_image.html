@@ -1,0 +1,18 @@
+{% extends "_layout.html" %}{%block content%}
+<div style="margin: 2vh 0 0 5vw;">
+  <h1>Change Profile Image</h1>
+
+  <form
+    action="{{url_for('users.profile')}}"
+    method="POST"
+    enctype="multipart/form-data"
+    style="margin: 5vh 0 0 0 ;"
+  >
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <label for="user_file"> </label>
+
+    <input type="file" name="user_file" />
+    <button type="submit">Upload</button>
+  </form>
+</div>
+{%endblock%}
