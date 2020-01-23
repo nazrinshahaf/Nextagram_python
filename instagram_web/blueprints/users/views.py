@@ -38,7 +38,21 @@ def create():
 
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
-    return render_template('users/profile.html')
+
+    # if user is logged in
+    if current_user.is_authenticated:
+        # if user exist
+        if user.User.get_or_none(user.User.username == username):
+            # if user is current user
+            if current_user.username == username:
+                return render_template('users/my_profile.html')
+            else:
+                user_profile = user.User.get(user.User.username == username)
+                return render_template('users/profile.html', user_profile= user_profile)
+        else:
+            return render_template('/users/user_doesnt_exist.html')
+    else:
+        return render_template('/users/not_logged_in.html')
     
 
 
@@ -115,6 +129,42 @@ def upload():
         profile_image_url = str(output)
         new_image = user.User.update(profile_image = profile_image_url ).where(user.User.id == current_user.id)
         new_image.execute()
+        return redirect(url_for('home'))
+        
+    else:
+        return redirect(url_for('home'))
+
+
+@users_blueprint.route('/upload_image', methods=["GET"])
+def images():
+    return render_template('users/upload_image.html')
+
+@users_blueprint.route('/upload_image', methods=["POST"])
+def upload_user_images():
+    if "user_file" not in request.files:
+        return "No user_file key in request.files"
+    
+    file = request.files['user_file']
+    if file.filename == "":
+        return "Please select a file"
+
+    if file and allowed_file(file.filename):
+        file.filename = secure_filename(file.filename)
+        output = upload_file_to_s3(file,S3_BUCKET)
+        
+        image_url = str(output)
+        
+        image_description = request.form.get('image_description')
+        # user_images.User_images.create(user = current_user.id, image = image_url, description = image_description) 
+        user_images.User_images.create(user=current_user.id,image=image_url,description=image_description)
+        
+        # delete create later on so u can save and validate
+
+
+
+        # profile_image_url = str(output)
+        # new_image = user.User.update(profile_image = profile_image_url ).where(user.User.id == current_user.id)
+        
         return redirect(url_for('home'))
         
     else:

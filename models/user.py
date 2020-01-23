@@ -9,7 +9,7 @@ class User(BaseModel,UserMixin):
     username = pw.CharField(unique=True, null=True)
     password = pw.CharField(null=True)
     email = pw.CharField(unique=True, null=True)
-    profile_image = pw.TextField(null = True)
+    profile_image = pw.TextField(null = True, default = 'http://nextagram-clone-pyhton-nazrin.s3.amazonaws.com/defualt.png')
     
     def validate(self):
         duplicate_username = User.get_or_none(User.username == self.username)
