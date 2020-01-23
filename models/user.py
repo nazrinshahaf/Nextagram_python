@@ -57,4 +57,3 @@ class User(BaseModel,UserMixin):
         # hashed password on save so its hashed in database
         else:
             self.password = generate_password_hash(self.password)
-             

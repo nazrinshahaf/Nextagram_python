@@ -59,11 +59,13 @@
           >
             <p>Sign out</p>
           </button>
-          <img
-            src="{{current_user.profile_image}}"
-            alt="Profile image"
-            style="width: 30px; height: 30px; border-radius: 50%; margin: 0 0vw 0 0;cursor: pointer;"
-          />
+          <a href="{{url_for('users.show', username = current_user.username)}}">
+            <img
+              src="{{current_user.profile_image}}"
+              alt="Profile image"
+              style="width: 30px; height: 30px; border-radius: 50%; margin: 0 0vw 0 0;cursor: pointer;"
+            />
+          </a>
         </form>
 
         {%else %}

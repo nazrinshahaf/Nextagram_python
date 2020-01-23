@@ -45,13 +45,13 @@ def show(username):
         if user.User.get_or_none(user.User.username == username):
             # if user is current user
             if current_user.username == username:
-                images = user_images.User_images.select().where(user_images.User_images.user == current_user.id)
-                return render_template('users/my_profile.html', images = images)
+                img = user.User.get_by_id(current_user.id).images
+                return render_template('users/my_profile.html', img = img)
             else:
-
+                
                 user_profile = user.User.get(user.User.username == username)
-                images = user_images.User_images.select().where(user_images.User_images.user == user_profile.id)
-                return render_template('users/profile.html', user_profile= user_profile, images = images)
+                img = user.User.get_by_id(user_profile.id).images
+                return render_template('users/profile.html', user_profile= user_profile, img = img)
         else:
             return render_template('/users/user_doesnt_exist.html')
     else:

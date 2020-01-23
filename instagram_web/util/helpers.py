@@ -4,6 +4,8 @@ from app import app
 from models import *
 from flask_login import current_user
 from flask import redirect, url_for, render_template
+from datetime import *
+from flask_login import current_user
 
 s3 = boto3.client(
    "s3",
@@ -13,6 +15,10 @@ s3 = boto3.client(
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 def upload_file_to_s3(file, bucket_name, acl="public-read"):
+
+    now = datetime.now()
+    date_string = now.strftime("%Y%m%d%H%M%S")
+    file.filename = f"{date_string}{current_user.username}{file.filename}"
 
     try:
         s3.upload_fileobj(
