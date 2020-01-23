@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 from models import *
 from flask_wtf.csrf import CSRFProtect
 from flask_login import login_user,current_user
-from helpers import *
+from instagram_web.util.helpers import *
 
 
 users_blueprint = Blueprint('users',
@@ -97,27 +97,22 @@ def profile():
 @users_blueprint.route('/test', methods=["POST"])
 def upload():
     
-    file = request.files['user_file']
     if "user_file" not in request.files:
         return "No user_file key in request.files"
     
-    # # file = request.files.get('upload_image')
-
-    # breakpoint()
+    file = request.files['user_file']
     if file.filename == "":
         return "Please select a file"
 
     if file and allowed_file(file.filename):
         file.filename = secure_filename(file.filename)
         output = upload_file_to_s3(file,S3_BUCKET)
-        return str(output)
+
+        profile_image_url = str(output)
+        new_image = user.User.update(profile_image = profile_image_url ).where(user.User.id == current_user.id)
+        new_image.execute()
+        return redirect(url_for('home'))
         
     else:
         return redirect(url_for('home'))
 
-
-    
-    
-
-
-    

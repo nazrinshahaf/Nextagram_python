@@ -1,7 +1,9 @@
 import boto3, botocore
 from config import S3_KEY, S3_SECRET, S3_BUCKET,S3_LOCATION
 from app import app
-
+from models import *
+from flask_login import current_user
+from flask import redirect, url_for, render_template
 
 s3 = boto3.client(
    "s3",
@@ -27,6 +29,8 @@ def upload_file_to_s3(file, bucket_name, acl="public-read"):
         print("Something Happened: ", e)
         return e
     return "{}{}".format(S3_LOCATION, file.filename)
+    
+    
 
 
 def allowed_file(filename):
