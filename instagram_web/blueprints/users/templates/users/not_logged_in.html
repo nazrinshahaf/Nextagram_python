@@ -1,0 +1,20 @@
+{% extends "_layout.html" %} {% block title %}Page Not Found{% endblock %}
+{%block navbar%} {%endblock%} {%block content %}
+<div style="position: relative;">
+  <h1
+    style="position: absolute;top: 20vh;left: 50%;transform: translate(-50%,0);font-size: 45px;"
+  >
+    Not logged in
+  </h1>
+  <p
+    style="position: absolute;top: 28vh;left: 50%;transform: translate(-50%,0);font-size: 18px;text-align: center;margin: 2vh 0 0 0;"
+  >
+    To view this page you need to make an account first :)
+  </p>
+  <a
+    style="position: absolute;top: 36.5vh;left: 50%;transform: translate(-50%,0);font-size: 18px;text-align: center;margin: 2vh 0 0 0;text-decoration: none;"
+    href="{{url_for('users.new')}}"
+    ><p>Create an account</p></a
+  >
+</div>
+{% endblock %}

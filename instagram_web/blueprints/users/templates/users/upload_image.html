@@ -1,0 +1,21 @@
+{% extends "_layout.html" %}{%block content%}
+<div style="margin: 2vh 0 0 5vw;">
+  <h1>Upload Image</h1>
+
+  <form
+    action="{{url_for('users.images')}}"
+    method="POST"
+    enctype="multipart/form-data"
+    style="margin: 5vh 0 0 0 ;"
+  >
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <label for="user_file"> </label>
+
+    <input type="file" name="user_file" />
+
+    <label for="image_description"></label>
+    <input type="text" name="image_description" placeholder="Description" />
+    <button type="submit">Upload</button>
+  </form>
+</div>
+{%endblock%}
