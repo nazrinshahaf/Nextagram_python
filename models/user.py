@@ -3,6 +3,8 @@ import peewee as pw
 from werkzeug.security import generate_password_hash
 from flask_login import UserMixin,current_user, login_user
 import re
+from playhouse.hybrid import hybrid_property
+from config import S3_LOCATION
 
 class User(BaseModel,UserMixin):
     name = pw.CharField(unique=False, null=True)
@@ -57,3 +59,7 @@ class User(BaseModel,UserMixin):
         # hashed password on save so its hashed in database
         else:
             self.password = generate_password_hash(self.password)
+
+    @hybrid_property
+    def image_path(self):
+        return S3_LOCATION + self.profile_image

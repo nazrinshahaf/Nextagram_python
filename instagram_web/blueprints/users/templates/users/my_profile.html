@@ -2,7 +2,7 @@
 
 <div style="display: flex; flex-direction: row; margin: 5vh 0 0 5vw;">
   <img
-    src="{{current_user.profile_image}}"
+    src="{{current_user.image_path}}"
     alt=""
     style="width: 200px;height: 200px; border-radius: 50%; text-align: center; "
   />
@@ -32,7 +32,7 @@
     {%for i in img%}
     <div>
       <img
-        src="{{i.image}}"
+        src="{{i.image_path}}"
         alt=""
         style="width: 30vw;height: 30vw; margin: 1vw; object-fit: cover;"
       />
