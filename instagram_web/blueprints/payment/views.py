@@ -20,6 +20,7 @@ def new_payment(img_id):
 def payment(img_id):
     nonce = request.form.get("nonce")
     amount = request.form.get("amount")
+    message = request.form.get("message")
 
     result = gateway.transaction.sale({
         "amount": amount,
@@ -31,7 +32,7 @@ def payment(img_id):
 
 
     if result.is_success:
-        new_donation = Payment(user=current_user.id,image=img_id, amount=amount, message="TEST")
+        new_donation = Payment(user=current_user.id,image=img_id, amount=amount, message=message)
 
         if new_donation.save():
             return redirect(url_for('home'))

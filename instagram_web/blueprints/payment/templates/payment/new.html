@@ -1,21 +1,86 @@
 {% extends '_layout.html' %} {%block navbar%} {%endblock%} {%block content%}
+<style>
+  .currencyinput {
+    border: 1px inset #ccc;
+  }
+  .currencyinput input {
+    border: 0;
+  }
+</style>
 <h1>Payment</h1>
 <script src="https://js.braintreegateway.com/web/dropin/1.22.0/js/dropin.min.js"></script>
 
-<div id="dropin-container"></div>
+<div style="margin: 0 5vw 0 5vw;">
+  <div id="dropin-container"></div>
 
-<form
-  id="123"
-  action="{{url_for('payment.payment', img_id = img_id)}}"
-  method="POST"
->
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <input type="number" name="amount" />
-  <input type="hidden" name="nonce" id="nonce" />
-</form>
+  <form
+    id="123"
+    action="{{url_for('payment.payment', img_id = img_id)}}"
+    method="POST"
+    onsubmit="return false"
+  >
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input type="hidden" name="nonce" id="nonce" />
+    <label for="amount">Donation amount</label>
 
-<button type="submit" id="submit-button">Donate 1</button>
+    <button
+      type="button"
+      style="width: 50px; border-radius: 4px;cursor: pointer;"
+      id="button5"
+    >
+      5
+    </button>
+    <button
+      type="button"
+      style="width: 50px; border-radius: 4px;cursor: pointer;"
+      id="button10"
+    >
+      10
+    </button>
 
+    <button
+      type="button"
+      style="width: 50px; border-radius: 4px;cursor: pointer;"
+      id="button20"
+    >
+      20
+    </button>
+    <button
+      type="button"
+      style="width: 50px; border-radius: 4px;cursor: pointer;"
+      id="button50"
+    >
+      50
+    </button>
+
+    <div style="display: flex; flex-direction: column;">
+      <span class="currenct_input"
+        >$
+        <input
+          type="number"
+          name="amount"
+          id="amount"
+          style="width: 250px; border-radius: 4px; border-style: solid; border-width: 1px;border-color: #d3d3d3; margin: 2vh 0 0 0 ;"
+          placeholder="Some other amount"
+        />
+      </span>
+      <label for="message" style="margin: 2vh 0 0 0 ;"> Donation Message</label>
+      <textarea
+        name="message"
+        rows="10"
+        placeholder="Say something..."
+        style=" border-radius: 4px; border-style: solid; border-width: 1px;border-color: #d3d3d3; height: 150px"
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      id="submit-button"
+      style="margin: 2vh 0 0 0; border-radius: 4px; cursor: pointer;"
+    >
+      Donate
+    </button>
+  </form>
+</div>
 <script>
   var button = document.querySelector("#submit-button");
 
@@ -34,6 +99,30 @@
       });
     }
   );
+
+  let button5 = document.querySelector("#button5");
+
+  button5.addEventListener("click", function() {
+    document.getElementById("amount").value = 5;
+  });
+
+  let button10 = document.querySelector("#button10");
+
+  button10.addEventListener("click", function() {
+    document.getElementById("amount").value = 10;
+  });
+
+  let button20 = document.querySelector("#button20");
+
+  button20.addEventListener("click", function() {
+    document.getElementById("amount").value = 20;
+  });
+
+  let button50 = document.querySelector("#button50");
+
+  button50.addEventListener("click", function() {
+    document.getElementById("amount").value = 50;
+  });
 </script>
 
 {%endblock%}
