@@ -5,6 +5,7 @@ from models.base_model import db
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 from models.user import User
+import braintree
 
 
 
@@ -36,3 +37,13 @@ def _db_close(exc):
         print(db)
         print(db.close())
     return exc
+
+# payemnt method
+gateway = braintree.BraintreeGateway(
+    braintree.Configuration(
+        braintree.Environment.Sandbox,
+        merchant_id=os.getenv("BRAIN_TREE_MERCHANT_ID"),
+        public_key=os.getenv("BRAIN_TREE_PUBLIC_KEY"),
+        private_key=os.getenv("BRAIN_TREE_PRIVATE_KEY")
+    )
+)
