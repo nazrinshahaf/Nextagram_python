@@ -168,3 +168,17 @@ def upload_user_images():
 def search():
      search_username = request.args.get("search_username")
      return redirect(url_for('users.show', username = search_username))
+
+@users_blueprint.route('/private', methods=["POST"])
+def make_private():
+    
+    x = user.User.update(is_private = not current_user.is_private).where(user.User.id == current_user.id)
+    x.execute()
+    if current_user.is_private:
+        flash("Account set to public")
+    else:
+        flash("Account set to private")
+
+    
+    return redirect(url_for('users.show', username = current_user.username))
+    

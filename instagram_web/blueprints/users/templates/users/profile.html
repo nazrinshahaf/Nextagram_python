@@ -1,13 +1,41 @@
-{%extends "_layout.html"%} {%block content%}
-
+{%extends "_layout.html"%} {%block content%} {%if user_profile.is_private%}
 <div style="display: flex; flex-direction: row; margin: 5vh 0 0 5vw;">
   <img
-    src="{{user_profile.profile_image}}"
+    src="{{user_profile.image_path}}"
     alt=""
     style="width: 200px;height: 200px; border-radius: 50%; text-align: center; "
   />
   <p style="margin: 5vh 0 0 5vw ; font-size: 25px;">
-    {{user_profile.image_path}}
+    {{user_profile.username}}
+  </p>
+</div>
+
+<div
+  style="display: flex; justify-content: center; flex-direction: row; margin: 5vh 0 0 0;"
+>
+  <p style="font-size: 25px; text-align: center;">
+    This account is private
+  </p>
+</div>
+
+<div
+  style="display: flex; justify-content: center; flex-direction: row; margin: 1vh 0 0 0;"
+>
+  <p style="font-size: 20px; text-align: center;">
+    Follow this user to see their photos and videos
+  </p>
+</div>
+
+{%else%}
+
+<div style="display: flex; flex-direction: row; margin: 5vh 0 0 5vw;">
+  <img
+    src="{{user_profile.image_path}}"
+    alt=""
+    style="width: 200px;height: 200px; border-radius: 50%; text-align: center; "
+  />
+  <p style="margin: 5vh 0 0 5vw ; font-size: 25px;">
+    {{user_profile.username}}
   </p>
 </div>
 
@@ -27,4 +55,4 @@
   </div>
 </div>
 
-{%endblock%}
+{%endif%} {%endblock%}
