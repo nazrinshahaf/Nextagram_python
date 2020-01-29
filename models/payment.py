@@ -7,7 +7,6 @@ from playhouse.hybrid import hybrid_property
 from flask_login import current_user
 
 class Payment(BaseModel):
-
     user = pw.ForeignKeyField(User, backref='donations')
     image = pw.ForeignKeyField(User_images, backref='donations')
     amount = pw.IntegerField(null = False, default= 5)

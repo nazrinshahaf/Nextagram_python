@@ -52,12 +52,15 @@
       />
       <script src="https://js.braintreegateway.com/web/dropin/1.22.0/js/dropin.min.js"></script>
       <div id="dropin-container"></div>
-      <button
-        id="submit-button"
-        style="width: 30vw;height: 40px; margin: 1vw; border-radius: 4px; background-color: #007BFF; color: white; cursor: pointer; border: none;"
-      >
-        Donate
-      </button>
+
+      <form action="{{url_for('payment.new_payment', img_id = i.id)}}">
+        <button
+          id="submit-button"
+          style="width: 30vw;height: 40px; margin: 1vw; border-radius: 4px; background-color: #007BFF; color: white; cursor: pointer; border: none;"
+        >
+          Donate
+        </button>
+      </form>
       <script>
         var button = document.querySelector("#submit-button");
 

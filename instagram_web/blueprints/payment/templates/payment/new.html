@@ -4,13 +4,18 @@
 
 <div id="dropin-container"></div>
 
-<form id="123" action="{{url_for('payment.payment')}}" method="POST">
+<form
+  id="123"
+  action="{{url_for('payment.payment', img_id = img_id)}}"
+  method="POST"
+>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
   <input type="number" name="amount" />
   <input type="hidden" name="nonce" id="nonce" />
 </form>
 
-<button id="submit-button">Donate 1</button>
+<button type="submit" id="submit-button">Donate 1</button>
+
 <script>
   var button = document.querySelector("#submit-button");
 
