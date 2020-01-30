@@ -1,0 +1,19 @@
+{%extends "_layout.html"%} {%block navbar%}{%endblock%} {%block content%}
+
+<div style="margin: 30vh 0 0 0 ;padding: 0;">
+  <div style="text-align: center; line-height: 20vh;">
+    <h1 style="margin: 0;">
+      You have recevied a follow request from {{current_user.username}}!
+    </h1>
+    <a
+      href="http://localhost:5000/users/follow/private/{{user_profile.username}}/{{timestamp}}"
+      style="font-size: 18px;"
+    >
+      Accept request
+    </a>
+    <a href="" style="margin: 0 0 0 3vw; font-size: 18px;">
+      Decline request
+    </a>
+  </div>
+</div>
+{%endblock%}

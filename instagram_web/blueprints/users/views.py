@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, render_template,request,url_for,redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -6,6 +7,10 @@ from models.followers import *
 from flask_wtf.csrf import CSRFProtect
 from flask_login import login_user,current_user
 from instagram_web.util.helpers import *
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from datetime import datetime
+
 
 
 
@@ -13,6 +18,9 @@ users_blueprint = Blueprint('users',
                             __name__,
                             template_folder='templates')
 
+
+now = datetime.now()
+timestamp = datetime.timestamp(now)
 
 @users_blueprint.route('/new', methods=['GET'])
 def new():
@@ -193,26 +201,54 @@ def make_private():
     
 @users_blueprint.route('/follow/<username>', methods=["POST"])
 def follow(username):
-    followed_user = user.User.get_or_none(user.User.username == username)
-    following = Followers(follower = current_user.id, followed = followed_user.id).save()
+    pending = False
+    user_profile = user.User.get_or_none(user.User.username == username)
 
-    # if i want to add flash message add .save() at the end of following
-    # if following.save():
-    #     flash("Followed")
-    # else:
-    #     flash("Something went wrong")
+    # if profile exist
+    if user_profile:
+        # if profile is private
+        if user_profile.is_private:
+            message = Mail(
+                from_email='NazNextagram@gmail.com',
+                to_emails="upchuck333@yahoo.com",
+                subject="You've received a donation!",
+                html_content=render_template("users/follow_request.html", timestamp = timestamp,user_profile = user_profile))
+            try:
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                response = sg.send(message)
+                print(response.status_code)
+                print(response.body)
+                print(response.headers)
+            except Exception as e:
+                print(str(e))
+
+            pending = True
+            flash("follow request sent")
+            return render_template("/users/profile.html", user_profile = user_profile, pending = pending)
+        # if profile public
+        else:
+            following = Followers(follower = current_user.id, followed = user_profile.id).save() 
+            return redirect(url_for('users.show', username = username))
+    # if user doesnt exist
+    else:
+        return render_template('/users/user_doesnt_exist.html')
     
-    return redirect(url_for('users.show', username = username))
+@users_blueprint.route(f"/follow/private/<username>/{timestamp}", methods=["GET"])
+def follow_request(username):
+    user_profile = user.User.get_or_none(user.User.username == username)
+    following = Followers(follower = current_user.id, followed = user_profile.id).save() 
+    
+    return redirect(url_for("home"))
 
 @users_blueprint.route('/unfollow/<username>', methods=["POST"])
 def unfollow(username):
     followed_user = user.User.get_or_none(user.User.username == username)
     unfollowed = Followers.get_or_none(Followers.follower == current_user.id, Followers.followed == followed_user.id).delete_instance()
-    
     # if unfollowed:
     #     flash("Unfollowed")
     # else:
     #     flash("Something went wrong")
+    return redirect(url_for('home'))
 
-    return redirect(url_for('users.show', username = username))
+
 
