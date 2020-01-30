@@ -1,4 +1,7 @@
-{%extends "_layout.html"%} {%block content%} {%if user_profile.is_private%}
+{%extends "_layout.html"%} {%block content%} {%if user_profile.is_private and
+not following %}
+
+<!-- private profile -->
 
 <div style="display: flex; flex-direction: row; margin: 5vh 0 0 5vw;">
   <img
@@ -9,6 +12,17 @@
   <p style="margin: 5vh 0 0 5vw ; font-size: 25px;">
     {{user_profile.username}}
   </p>
+  <form
+    action="{{url_for('users.follow', username=user_profile.username)}}"
+    method="POST"
+  >
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button
+      style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 6vh 0 0 5vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
+    >
+      Follow
+    </button>
+  </form>
 </div>
 
 <div
@@ -26,9 +40,8 @@
     Follow this user to see their photos and videos
   </p>
 </div>
-
 {%else%}
-
+<!-- public profile -->
 <style>
   #Follow_button:hover span {
     display: none;

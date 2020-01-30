@@ -196,6 +196,7 @@ def follow(username):
     followed_user = user.User.get_or_none(user.User.username == username)
     following = Followers(follower = current_user.id, followed = followed_user.id).save()
 
+    # if i want to add flash message add .save() at the end of following
     # if following.save():
     #     flash("Followed")
     # else:
@@ -214,3 +215,4 @@ def unfollow(username):
     #     flash("Something went wrong")
 
     return redirect(url_for('users.show', username = username))
+
