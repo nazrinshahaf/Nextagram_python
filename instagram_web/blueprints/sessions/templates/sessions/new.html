@@ -21,6 +21,14 @@
   >
     Create
   </button>
+  <a href="{{url_for('sessions.login_with_google')}}">
+    <button
+      type="button"
+      style="width: 110px; height: 35px; border-radius: 4px; cursor: pointer; background-color: #ed4956; color: white; margin: 3vh 0 0 0vw; border: none; margin: 0 0 0 5vw;"
+    >
+      Google
+    </button>
+  </a>
 </form>
 {% with messages = get_flashed_messages() %} {% if messages %} {% for message in
 messages %}

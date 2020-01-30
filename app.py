@@ -6,8 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
 from models.user import User
 import braintree
-
-
+from authlib.flask.client import OAuth
 
 login_manager = LoginManager()
 
@@ -16,6 +15,7 @@ app = Flask('NEXTAGRAM', root_path=web_dir)
 
 csrf = CSRFProtect(app)
 login_manager.init_app(app)
+oauth = OAuth()
 
 
 if os.getenv('FLASK_ENV') == 'production':
@@ -46,4 +46,23 @@ gateway = braintree.BraintreeGateway(
         public_key=os.getenv("BRAIN_TREE_PUBLIC_KEY"),
         private_key=os.getenv("BRAIN_TREE_PRIVATE_KEY")
     )
+)
+
+#google auth  
+
+
+oauth.register('google',
+    client_id=config.CLIENT_PUBLIC_GOOGLE,
+    client_secret=config.CLIENT_PRIVATE_KEY_GOOGLE,
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    refresh_token_url=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    client_kwargs={
+        'scope': 'https://www.googleapis.com/auth/userinfo.email',
+        'token_endpoint_auth_method': 'client_secret_basic',
+        'token_placement': 'header',
+        'prompt': 'consent'
+    }
 )

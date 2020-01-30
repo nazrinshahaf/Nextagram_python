@@ -5,9 +5,11 @@ from instagram_web.blueprints.sessions.views import sessions_blueprint
 from instagram_web.blueprints.payment.views import payment_blueprint
 from flask_assets import Environment, Bundle
 from .util.assets import bundles
+from app import oauth
 
 assets = Environment(app)
 assets.register(bundles)
+oauth.init_app(app)
 
 app.register_blueprint(users_blueprint, url_prefix="/users")
 app.register_blueprint(sessions_blueprint)

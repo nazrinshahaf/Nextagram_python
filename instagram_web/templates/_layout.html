@@ -21,6 +21,16 @@
       {% block title %} {% endblock %}Nextagram
     </title>
   </head>
+  <style>
+    .google_sign_in {
+      margin: 0 2vw 0 0;
+      color: #ed4956;
+    }
+    .google_sign_in:hover {
+      color: #be3944;
+      border-bottom-color: #ed4956;
+    }
+  </style>
   <body>
     {% block navbar %}
 
@@ -46,6 +56,15 @@
       </div>
       <div style="display: flex; flex-direction: row;">
         {% if current_user.is_authenticated %}
+
+        <a
+          class="google_sign_in"
+          href="{{url_for('sessions.login_with_google')}}"
+        >
+          <p>
+            Google
+          </p>
+        </a>
         <a href="{{url_for('users.show', username = current_user.username)}}"
           ><p style="margin: 0 2vw 0 0;">My Profile</p></a
         >
