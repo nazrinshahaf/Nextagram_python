@@ -1,4 +1,5 @@
 {%extends "_layout.html"%} {%block content%} {%if user_profile.is_private%}
+
 <div style="display: flex; flex-direction: row; margin: 5vh 0 0 5vw;">
   <img
     src="{{user_profile.image_path}}"
@@ -28,6 +29,14 @@
 
 {%else%}
 
+<style>
+  #Follow_button:hover span {
+    display: none;
+  }
+  #Follow_button:hover:before {
+    content: "Unfollow";
+  }
+</style>
 <div style="display: flex; flex-direction: row; margin: 5vh 0 0 5vw;">
   <img
     src="{{user_profile.image_path}}"
@@ -37,6 +46,33 @@
   <p style="margin: 5vh 0 0 5vw ; font-size: 25px;">
     {{user_profile.username}}
   </p>
+
+  {% if following %}
+  <form
+    action="{{url_for('users.unfollow', username=user_profile.username)}}"
+    method="POST"
+  >
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button
+      id="Follow_button"
+      style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 6vh 0 0 5vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
+    >
+      <span>Following</span>
+    </button>
+  </form>
+  {% else %}
+  <form
+    action="{{url_for('users.follow', username=user_profile.username)}}"
+    method="POST"
+  >
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button
+      style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 6vh 0 0 5vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
+    >
+      Follow
+    </button>
+  </form>
+  {% endif %}
 </div>
 
 <div style="margin: 5vh 0 0 0;">
@@ -61,23 +97,6 @@
           Donate
         </button>
       </form>
-      <script>
-        var button = document.querySelector("#submit-button");
-
-        braintree.dropin.create(
-          {
-            authorization: "CLIENT_TOKEN_FROM_SERVER",
-            container: "#dropin-container"
-          },
-          function(createErr, instance) {
-            button.addEventListener("click", function() {
-              instance.requestPaymentMethod(function(err, payload) {
-                // Submit payload.nonce to your server
-              });
-            });
-          }
-        );
-      </script>
     </div>
 
     {% endfor %}

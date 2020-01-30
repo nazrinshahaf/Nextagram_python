@@ -2,9 +2,11 @@ from flask import Blueprint, render_template,request,url_for,redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from models import *
+from models.followers import *
 from flask_wtf.csrf import CSRFProtect
 from flask_login import login_user,current_user
 from instagram_web.util.helpers import *
+
 
 
 users_blueprint = Blueprint('users',
@@ -38,20 +40,27 @@ def create():
 
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
+    # user profile of visited user
+    user_profile = user.User.get(user.User.username == username)
 
-    # if user is logged in
+    # if current user is logged in
     if current_user.is_authenticated:
-        # if user exist
-        if user.User.get_or_none(user.User.username == username):
-            # if user is current user
+        # if visited user exist
+        if user.User.get_or_none(username == username):
+            # if current user is current user
             if current_user.username == username:
                 img = user.User.get_by_id(current_user.id).images
                 return render_template('users/my_profile.html', img = img)
             else:
                 
-                user_profile = user.User.get(user.User.username == username)
+                following = ""
+                if Followers.get_or_none(Followers.follower == current_user.id, Followers.followed == user_profile.id):
+                    following = True
+                else:
+                    following = False 
+
                 img = user.User.get_by_id(user_profile.id).images
-                return render_template('users/profile.html', user_profile= user_profile, img = img)
+                return render_template('users/profile.html', user_profile= user_profile, img = img, following = following)
         else:
             return render_template('/users/user_doesnt_exist.html')
     else:
@@ -182,3 +191,26 @@ def make_private():
     
     return redirect(url_for('users.show', username = current_user.username))
     
+@users_blueprint.route('/follow/<username>', methods=["POST"])
+def follow(username):
+    followed_user = user.User.get_or_none(user.User.username == username)
+    following = Followers(follower = current_user.id, followed = followed_user.id).save()
+
+    # if following.save():
+    #     flash("Followed")
+    # else:
+    #     flash("Something went wrong")
+    
+    return redirect(url_for('users.show', username = username))
+
+@users_blueprint.route('/unfollow/<username>', methods=["POST"])
+def unfollow(username):
+    followed_user = user.User.get_or_none(user.User.username == username)
+    unfollowed = Followers.get_or_none(Followers.follower == current_user.id, Followers.followed == followed_user.id).delete_instance()
+    
+    # if unfollowed:
+    #     flash("Unfollowed")
+    # else:
+    #     flash("Something went wrong")
+
+    return redirect(url_for('users.show', username = username))
