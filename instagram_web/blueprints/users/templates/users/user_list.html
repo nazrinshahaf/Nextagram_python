@@ -1,0 +1,57 @@
+{%extends "_layout.html"%}{%block content%}
+<!-- print out follower list -->
+
+<div style="margin: 5vh 5vw 0 5vw;">
+  {%for f in allfollowers%}
+  <div
+    style="display: flex; flex-direction: row; margin: 0 0 2vh; border-bottom: solid 1px #c2c2c2;height: 8vh; justify-content: space-between;"
+  >
+    <div style="display: flex; flex-direction: row;">
+      <img
+        src="{{f.profile.image_path}}"
+        alt="profile_image"
+        style="width: 45px;height: 45px; border-radius: 50%; border: solid 1px #c2c2c2; cursor: pointer;"
+      />
+
+      <div style="display: flex; flex-direction: column; margin: 0 0 0 2vw;">
+        <p style="margin: 0;font-size: 15px;">{{f.profile.username}}</p>
+        <p style="margin:0;font-size: 15px;color: #c2c2c2;">
+          {{f.profile.name}}
+        </p>
+      </div>
+    </div>
+    <div style="margin: 1vh 0 0 0 ;">
+      {%if f.status%}
+      <form
+        action="{{url_for('users.unfollow', username = f.profile.username)}}"
+        method="POST"
+      >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button
+          type="submit"
+          style="border-radius: 4px; width: 110px; color: black; border: 1px solid #c3c3c3; outline: none; cursor: pointer;"
+        >
+          Following
+        </button>
+      </form>
+      {%else%}
+
+      <form
+        action="{{url_for('users.follow', username = f.profile.username)}}"
+        method="POST"
+      >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button
+          type="submit"
+          style="border-radius: 4px; width: 110px; color: white; background-color: #3897f0; border: none; outline: none; cursor: pointer;"
+        >
+          Follow
+        </button>
+      </form>
+      {%endif%}
+    </div>
+  </div>
+  {%endfor%}
+</div>
+
+{%endblock%}
