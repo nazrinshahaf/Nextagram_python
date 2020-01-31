@@ -92,7 +92,11 @@ not following %}
   <div
     style="display: flex;flex-direction: row; justify-content: space-around; margin: auto;"
   >
-    {%for i in img%}
+    {%if img | length < 1 %}
+    <p style="font-size: 25px; text-align: center;">
+      No posts yet
+    </p>
+    {%else%} {%for i in img%}
     <div>
       <img
         src="{{i.image_path}}"
@@ -111,8 +115,7 @@ not following %}
         </button>
       </form>
     </div>
-
-    {% endfor %}
+    {% endfor %} {%endif%}
   </div>
 </div>
 

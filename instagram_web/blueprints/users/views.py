@@ -49,18 +49,18 @@ def create():
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
     # user profile of visited user
-    user_profile = user.User.get(user.User.username == username)
+    user_profile = user.User.get_or_none(user.User.username == username)
 
     # if current user is logged in
     if current_user.is_authenticated:
         # if visited user exist
-        if user.User.get_or_none(username == username):
+        if user.User.get_or_none(user.User.username == username):
             # if current user is current user
             if current_user.username == username:
                 img = user.User.get_by_id(current_user.id).images
                 return render_template('users/my_profile.html', img = img)
             else:
-                
+                # check if current user is following visited user
                 following = ""
                 if Followers.get_or_none(Followers.follower == current_user.id, Followers.followed == user_profile.id):
                     following = True
@@ -78,7 +78,19 @@ def show(username):
 
 @users_blueprint.route('/', methods=["GET"])
 def index():
-    return "USERS"
+    allfollowers = []
+    
+    for f in current_user.followers:
+        status = False
+        follower_profile = user.User.get_by_id(f.follower)
+        if Followers.get_or_none(Followers.follower == current_user.id, Followers.followed == follower_profile.id):
+            status = True
+        allfollowers.append({
+            "profile" : follower_profile,
+            "status": status
+        })
+        
+    return render_template("users/user_list.html", allfollowers=allfollowers)
 
 
 @users_blueprint.route('/edit', methods=['GET'])
