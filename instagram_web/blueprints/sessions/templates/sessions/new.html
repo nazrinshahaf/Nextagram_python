@@ -1,43 +1,60 @@
 {% extends '_layout.html' %} {%block navbar%} {%endblock%} {%block content%}
-<h1 style="margin: 5vh 0 5vh 5vw; font-size: 45px;">Login</h1>
-
-<form
-  action="{{url_for('sessions.create')}}"
-  method="POST"
-  style="margin: 0 0 0 5vw;"
->
-  <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
-  <div style="display: flex; flex-direction: column;">
-    <label for="username_input">Username</label>
-    <input type="text" name="username_input" style="width: 60vw;" />
-  </div>
-  <div style="display: flex; flex-direction: column;">
-    <label for="password_input">Password</label>
-    <input type="password" name="password_input" style="width: 60vw" />
-  </div>
-  <button
-    type="submit"
-    style="width: 110px; height: 35px; border-radius: 4px; cursor: pointer; background-color: #3897f0; color: white; margin: 3vh 0 0 0vw; border: none;"
+<div style="background-color: #fafafa; width: 100vw;height: 100vh;">
+  <div
+    style="position: absolute; top: 40%;left: 50%;transform: translate(-50%,-50%); width: 30vw; height: 55vh;border: 1px solid #c2c2c2;border-radius: 2px;background-color: white;"
   >
-    Create
-  </button>
-  <a href="{{url_for('sessions.login_with_google')}}">
-    <button
-      type="button"
-      style="width: 110px; height: 35px; border-radius: 4px; cursor: pointer; background-color: #ed4956; color: white; margin: 3vh 0 0 0vw; border: none; margin: 0 0 0 5vw;"
-    >
-      Google
-    </button>
-  </a>
-</form>
-{% with messages = get_flashed_messages() %} {% if messages %} {% for message in
-messages %}
-<p style="margin: 2vh 0 0 5vw; color: #ed4956;">{{ message }}</p>
-{% endfor %} {% endif %} {% endwith %}
-<div style="margin: 4vh 0 0 5vw;display: flex;">
-  <p>Dont have an account?</p>
-  <a href="{{url_for('users.new')}}"
-    ><p style="margin: 0 0 0 1vw;">Sign up instead.</p></a
+  <p style="text-align: center; margin: 5vh 0 0 0;font-size: 35px;">Nextagram</p>
+    <div style="display: flex; justify-content: center;text-align: center;margin: 5vh 0 0 0;">
+      <form action="{{url_for('sessions.create')}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+        <div style="display: flex; flex-direction: column;">
+          <input
+            type="text"
+            name="username_input"
+            style="width: 20vw; border-radius: 3px; border: 1px solid #d3d3d3; height: 35px; font-size: 13px; padding: 0 0 0 1vw;background-color: #fafafa; margin: 0vh 0 1vh 0;"
+            placeholder="Username"
+          />
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <input
+            type="password"
+            name="password_input"
+            style="width: 20vw; border-radius: 3px; border: 1px solid #d3d3d3; height: 35px; font-size: 13px; padding: 0 0 0 1vw;background-color: #fafafa;"
+            placeholder="Password"
+          />
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+
+          <button
+            type="submit"
+            style="width: 20vw; height: 35px; border-radius: 4px; cursor: pointer; background-color: #3897f0; color: white; margin: 3vh 0 2vh 0vw; border: none;"
+          >
+            Log In
+          </button>
+          <p style="text-align: center;color: #696969;font-weight: 500;margin: 0;">OR</p>
+          <a href="{{url_for('sessions.login_with_google')}}">
+            <button
+              type="button"
+              style="width: 20vw; height: 35px; border-radius: 4px; cursor: pointer; background-color: #ed4956; color: white; margin: 2vh 0 0 0vw; border: none;"
+            >
+              Google
+            </button>
+        </div>
+        </a>
+      </form>
+    </div>
+
+  </div>
+  <div
+  style="position: absolute; top: 73%;left: 50%;transform: translate(-50%,-50%); width: 30vw; height: 10vh;border: 1px solid #c2c2c2;border-radius: 2px;background-color: white;"
+  >
+    <div style="margin: 3vh 0 0 0vw;display: flex;justify-content: center;">
+      <p>Dont have an account?</p>
+      <a href="{{url_for('users.new')}}"
+        ><p style="margin: 0 0 0 0.5vw;">Sign up</p></a
+      >
+    </div>
+  </div
   >
 </div>
 {%endblock%}

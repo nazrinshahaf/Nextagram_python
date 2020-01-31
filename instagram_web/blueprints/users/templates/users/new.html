@@ -1,48 +1,51 @@
 {% extends '_layout.html' %} {%block navbar%} {%endblock%} {%block content%}
-<h1 style="margin: 5vh 0 5vh 5vw; font-size: 45px;">Sign Up</h1>
-
-<form
-  action="{{url_for('users.create')}}"
-  method="POST"
-  style="margin: 0 0 0 5vw;"
->
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-
-  <div style="display: flex; flex-direction: column;">
-    <label for="name_input">Name</label>
-    <input type="text" name="name_input" style="width: 60vw" />
-  </div>
-  <div style="display: flex; flex-direction: column;">
-    <label for="email_input">Email</label>
-    <input type="email" name="email_input" style="width: 60vw" />
-    <!-- change type back to email  -->
-  </div>
-  <div style="display: flex; flex-direction: column;">
-    <label for="username_input">Username</label>
-    <input type="text" name="username_input" style="width: 60vw;" />
-  </div>
-  <div style="display: flex; flex-direction: column;">
-    <label for="password_input">Password</label>
-    <input type="password" name="password_input" style="width: 60vw" />
-  </div>
-  <button
-    type="submit"
-    style="width: 110px; height: 35px; border-radius: 4px; cursor: pointer; background-color: #3897f0; color: white; margin: 3vh 0 0 0vw; border: none;"
+<div style="background-color: #fafafa; width: 100vw;height: 100vh;">
+  <div
+    style="position: absolute; top: 40%;left: 50%;transform: translate(-50%,-50%); width: 30vw; height: 55vh;border: 1px solid #c2c2c2;border-radius: 2px;background-color: white;"
   >
-    Create
-  </button>
-</form>
+  <p style="text-align: center; margin: 5vh 0 0 0; font-size: 35px;">Nextagram</p>
+  <div style="margin: 3vh 0 0 0;">
+    <form
+      action="{{url_for('users.create')}}"
+      method="POST"
+      style="margin: 0 0 0 5vw;"
+    >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
-{% with messages = get_flashed_messages() %} {% if messages %} {% for message in
-messages %}
-<p style="margin: 2vh 0 0 5vw; color: #ed4956;">{{ message }}</p>
-{% endfor %} {% endif %} {% endwith %}
+      <div style="display: flex; flex-direction: column;">
+        <input placeholder="Name"type="text" name="name_input" style="width: 20vw; border-radius: 3px; border: 1px solid #d3d3d3; height: 35px; font-size: 13px; padding: 0 0 0 1vw;background-color: #fafafa; margin: 1vh 0 0 " />
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <input placeholder="Email" type="email" name="email_input" style="width: 20vw; border-radius: 3px; border: 1px solid #d3d3d3; height: 35px; font-size: 13px; padding: 0 0 0 1vw;background-color: #fafafa; margin: 1vh 0 0 " />
+        <!-- change type back to email  -->
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <input placeholder="Username" type="text" name="username_input" style="width: 20vw; border-radius: 3px; border: 1px solid #d3d3d3; height: 35px; font-size: 13px; padding: 0 0 0 1vw;background-color: #fafafa; margin: 1vh 0 0 " />
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <input placeholder="Password" type="password" name="password_input" style="width: 20vw; border-radius: 3px; border: 1px solid #d3d3d3; height: 35px; font-size: 13px; padding: 0 0 0 1vw;background-color: #fafafa; margin: 1vh 0 0 " />
+      </div>
+      <button
+        type="submit"
+        style="width: 20vw; height: 35px; border-radius: 4px; cursor: pointer; background-color: #3897f0; color: white; margin: 3vh 0 2vh 0vw; border: none;"
+      >
+        Sign Up
+      </button>
+    </form>
+    </div>
+  </div>
 
-<div style="margin: 4vh 0 0 5vw;display: flex;">
-  <p>Already have an acocunt?</p>
-  <a href="{{url_for('sessions.new')}}"
-    ><p style="margin: 0 0 0 1vw;">Login instead.</p></a
+  <div
+  style="position: absolute; top: 73%;left: 50%;transform: translate(-50%,-50%); width: 30vw; height: 10vh;border: 1px solid #c2c2c2;border-radius: 2px;background-color: white;"
+  >
+    <div style="margin: 3vh 0 0 0vw;display: flex;justify-content: center;">
+      <p>Have an account?</p>
+      <a href="{{url_for('sessions.new')}}"
+        ><p style="margin: 0 0 0 0.5vw;">Log in</p></a
+      >
+    </div>
+  </div
   >
 </div>
-
+</div>
 {%endblock%}

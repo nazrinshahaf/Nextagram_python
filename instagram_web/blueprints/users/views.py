@@ -46,7 +46,7 @@ def create():
         return render_template('users/new.html', email_input=email_input, name_input=name_input,password_input=password_input,username_input=username_input, errors=new_user.errors)
 
 
-@users_blueprint.route('/<username>', methods=["GET"])
+@users_blueprint.route('/<username>/show', methods=["GET"])
 def show(username):
     # user profile of visited user
     user_profile = user.User.get_or_none(user.User.username == username)

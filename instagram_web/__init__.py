@@ -6,6 +6,9 @@ from instagram_web.blueprints.payment.views import payment_blueprint
 from flask_assets import Environment, Bundle
 from .util.assets import bundles
 from app import oauth
+from flask_login import current_user
+from models import *
+from models.followers import *
 
 assets = Environment(app)
 assets.register(bundles)
@@ -25,4 +28,19 @@ def internal_server_error(e):
 
 @app.route("/")
 def home():
-    return render_template('home.html')
+    if current_user.is_authenticated:
+        allfollowers = [] 
+        for f in current_user.followers:
+            following = False
+            follower_profile = user.User.get_by_id(f.follower)
+            if Followers.get_or_none(Followers.follower == current_user.id, Followers.followed == follower_profile.id):
+                following = True
+            allfollowers.append({
+                "profile" : follower_profile,
+                "following": following
+            })
+        return render_template('home.html', allfollowers = allfollowers)
+    else:
+        return render_template('sessions/new.html')
+
+

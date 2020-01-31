@@ -16,7 +16,12 @@
       </a>
 
       <div style="display: flex; flex-direction: column; margin: 0 0 0 2vw;">
-        <p style="margin: 0;font-size: 15px;">{{f.profile.username}}</p>
+        <a
+          href="{{url_for('users.show', username = f.profile.username)}}"
+          style="color: black;text-decoration: none;"
+        >
+          <p style="margin: 0;font-size: 15px;">{{f.profile.username}}</p>
+        </a>
         <p style="margin:0;font-size: 15px;color: #c2c2c2;">
           {{f.profile.name}}
         </p>

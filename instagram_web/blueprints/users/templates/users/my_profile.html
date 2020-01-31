@@ -1,46 +1,103 @@
 {%extends "_layout.html"%} {%block content%}
+<style>
+  #current_user_profile_image:hover {
+    opacity: 0.5;
+    filter: blur(1px);
+    -webkit-filter: grayscale(30%);
+  }
+  #current_user_profile_image_container:hover {
+    opacity: 0.5;
+    filter: blur(1px);
+    -webkit-filter: grayscale(30%);
+  }
+</style>
 
-<div style="display: flex; flex-direction: row; margin: 5vh 0 0 5vw;">
-  <img
-    src="{{current_user.image_path}}"
-    alt=""
-    style="width: 200px;height: 200px; border-radius: 50%; text-align: center; "
-  />
-  <p style="margin: 5vh 0 0 5vw ; font-size: 20px;">
-    {{current_user.username}}
-  </p>
-  <form action="{{url_for('users.make_private')}}" method="POST">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    <button
-      style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 5vh 0 0 5vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
-    >
-      Make Private
-    </button>
-  </form>
-
-  <form action="{{url_for('users.images')}}">
-    <button
-      style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 5vh 0 0 5vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
-    >
-      Upload
-    </button>
-  </form>
-</div>
-
-<div style="margin: 5vh 0 0 0;">
+<div style="background-color: #fafafa;">
   <div
-    style="display: flex;flex-direction: row; justify-content: space-around; margin: auto;"
+    style="display: flex; flex-direction: row; margin: 0vh 5vw 0 5vw; padding: 5vh 0 0 0;"
   >
-    {%for i in img%}
-    <div>
+    <a href="{{url_for('users.profile')}}">
       <img
-        src="{{i.image_path}}"
+        id="current_user_profile_image"
+        src="{{current_user.image_path}}"
         alt=""
-        style="width: 30vw;height: 30vw; margin: 1vw; object-fit: cover;"
+        style="width: 200px;height: 200px; border-radius: 50%; text-align: center; cursor: pointer;"
       />
+    </a>
+
+    <div style="display: flex;flex-direction: column;">
+      <div style="display: flex;flex-direction: row;">
+        <p style="margin: 1vh 0 0 5vw ; font-size: 35px; font-weight: 100;">
+          {{current_user.username}}
+        </p>
+        <form action="{{url_for('users.edit')}}">
+          <button
+            style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 3vh 0 0 7vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px; outline: none;"
+          >
+            Edit
+          </button>
+        </form>
+        <!-- <form action="{{url_for('users.make_private')}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button
+          style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 3vh 0 0 7vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
+        >
+          Make Private
+        </button>
+      </form>
+
+      <form action="{{url_for('users.images')}}">
+        <button
+          style="width: 90px; height: 30px; border-radius: 4px; cursor: pointer; background-color: white; color: black; margin: 3vh 0 0 7vw; border: none;border-color: #b3b3b3; border-style: solid;border-width: 1px;"
+        >
+          Upload
+        </button>
+      </form> -->
+      </div>
+      <div style="display: flex;flex-direction: row; margin: 1vh 0 0 5vw;">
+        <p style="font-size: 18px;">{{img|length}}</p>
+        <p style="margin: 0 0 0 0.5vw; font-size: 18px;font-weight: 300 ;">
+          Post
+        </p>
+
+        <p style="font-size: 18px;margin: 0 0 0 8vw;">
+          {{current_user.followers |length}}
+        </p>
+        <a
+          href="{{url_for('users.index')}}"
+          style="color: black; text-decoration: none;"
+        >
+          <p style="margin: 0 0 0 0.5vw; font-size: 18px;font-weight: 300;">
+            Followers
+          </p>
+        </a>
+        <p style="font-size: 18px;margin: 0 0 0 8vw;">
+          {{current_user.following |length}}
+        </p>
+        <p style="margin: 0 0 0 0.5vw;font-size: 18px;font-weight: 300;">
+          Following
+        </p>
+      </div>
+      <div style="font-size: 18px; margin: 0 0 0 5vw;">
+        <p>{{current_user.name}}</p>
+      </div>
     </div>
-    {% endfor %}
+  </div>
+
+  <div style="margin: 5vh 0 0 0;">
+    <div
+      style="display: flex;flex-direction: row; justify-content: space-around; margin: auto;"
+    >
+      {%for i in img%}
+      <div>
+        <img
+          src="{{i.image_path}}"
+          alt=""
+          style="width: 30vw;height: 30vw; margin: 1vw; object-fit: cover;"
+        />
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
-
 {%endblock%}

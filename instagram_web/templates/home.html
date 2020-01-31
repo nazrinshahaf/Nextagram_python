@@ -1,8 +1,61 @@
 {% extends "_layout.html" %} {% block title %} {% endblock %} {% block content
 %}
+<div
+  style="background-color: #fafafa; height: 100vh; width: 100vw; padding: 6vh 0 0 9vw;"
+>
+  {%for f in allfollowers%}
+  <div
+    style="width: 53vw; height: 70vh; background-color: white;border: 1px solid #c2c2c2; border-radius: 4px; display: flex; flex-direction: column; margin: 0 0 10vh 0 ;"
+  >
+    <div style="display: flex;flex-direction: row; margin: 1vh 0 1vh 1vw;">
+      <img
+        src="{{f.profile.image_path}}"
+        alt=""
+        style="width: 30px;height: 30px; border-radius: 50%;border: 1px solid red;"
+      />
+      <div style="display: flex;flex-direction: column;">
+        <a
+          href="{{url_for('users.show', username = f.profile.username)}}"
+          style="color: black;text-decoration: none;"
+        >
+          <p style="margin: 0.5vh 0vw 0 0.5vw; font-size: 12px;">
+            {{f.profile.username}}
+          </p>
+        </a>
+      </div>
+    </div>
+    <img
+      src="/static/images/Rick and Morty .jpg"
+      alt=""
+      style="width: 100%; height: 45vh;object-fit: cover;"
+    />
+    <div style="border-bottom: 1px solid #c2c2c2;height:7vh">
+      <div
+        style="display: flex;flex-direction: row; margin: 1.5vh 0 0 1vw; justify-content: space-between;"
+      >
+        <div>
+          <img
+            src="/static/images/like_icon2.png"
+            alt=""
+            style="height: 25px; width: 25px; cursor: pointer;"
+          />
+          <img
+            src="/static/images/comment_icon copy.png"
+            alt=""
+            style="height: 28px; width: 28px;margin: 0 0 0 0.5vw; cursor: pointer"
+          />
+        </div>
+        <div style="margin: 0 1vw 0 0;">
+          <img
+            src="/static/images/bookmark.png"
+            alt=""
+            style="height: 25px; width: 25px;margin: 3px 0px 0 0; cursor: pointer"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+</div>
 
-<h1 style="margin: 0 0 0 5vw;">This is the Homepage</h1>
-
-{% if current_user.is_authenticated %}
-<p style="margin: 2vh 0 0 5vw;">Hi {{ current_user.name }}!</p>
-{% endif %} {% endblock %}
+{% endblock %}
