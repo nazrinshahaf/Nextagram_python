@@ -7,11 +7,13 @@
     style="display: flex; flex-direction: row; margin: 0 0 2vh; border-bottom: solid 1px #c2c2c2;height: 8vh; justify-content: space-between;"
   >
     <div style="display: flex; flex-direction: row;">
-      <img
-        src="{{f.profile.image_path}}"
-        alt="profile_image"
-        style="width: 45px;height: 45px; border-radius: 50%; border: solid 1px #c2c2c2; cursor: pointer;"
-      />
+      <a href="{{url_for('users.show', username = f.profile.username)}}">
+        <img
+          src="{{f.profile.image_path}}"
+          alt="profile_image"
+          style="width: 45px;height: 45px; border-radius: 50%; border: solid 1px #c2c2c2; cursor: pointer;"
+        />
+      </a>
 
       <div style="display: flex; flex-direction: column; margin: 0 0 0 2vw;">
         <p style="margin: 0;font-size: 15px;">{{f.profile.username}}</p>
