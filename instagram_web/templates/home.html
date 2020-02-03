@@ -8,11 +8,14 @@
     style="width: 53vw; height: 70vh; background-color: white;border: 1px solid #c2c2c2; border-radius: 4px; display: flex; flex-direction: column; margin: 0 0 10vh 0 ;"
   >
     <div style="display: flex;flex-direction: row; margin: 1vh 0 1vh 1vw;">
-      <img
-        src="{{f.profile.image_path}}"
-        alt=""
-        style="width: 30px;height: 30px; border-radius: 50%;border: 1px solid red;"
-      />
+      <div style="background: linear-gradient(to bottom right, #6600cc 10%, #ff6600 90%); width: 32px;height: 32px; border-radius: 50%; justify-content: center;text-align: center;align-items: center;line-height: 29px;">
+
+        <img
+          src="{{f.profile.image_path}}"
+          alt=""
+          style="width: 30px;height: 30px; border-radius: 50%;"
+        />
+      </div>
       <div style="display: flex;flex-direction: column;">
         <a
           href="{{url_for('users.show', username = f.profile.username)}}"
@@ -56,6 +59,67 @@
     </div>
   </div>
   {%endfor%}
-</div>
+  <!-- Profile Icon and Profile username -->
+  <div
+    style=" position: fixed; top:14%; left: 64%; display: flex; flex-direction: row;"
+  >
+    <a href="{{url_for('users.show', username = current_user.username)}}">
+      <img
+        src="{{current_user.image_path}}"
+        alt="profile picture"
+        style="width: 45px;height: 45px;border-radius: 50%; cursor: pointer;"
+      />
+    </a>
+    <div style="display: flex; flex-direction: column;">
+      <p style="margin: 0 0 0 0.5vw; font-size: 15px;">
+        {{current_user.username}}
+      </p>
+      <p style="margin: 0 0 0 0.5vw; color: #c2c2c2;font-size: 13px;">
+        {{current_user.name}}
+      </p>
+    </div>
+  </div>
+  <!-- Follower Stories -->
+  <div
+    style="background-color: white; border: 1px solid #c2c2c2; width: 20vw; height: 32vh; position: fixed; top:22%; left: 64%;border-radius: 4px; display: flex;flex-direction: column;"
+  >
+    <div
+      style="display: flex; flex-direction: row;justify-content: space-between; padding: 1vh 1vw 0 1vw;"
+    >
+      <p style="font-size: 14px;color: #a1a1a1;">Stories</p>
+      <p style="font-size: 14px;cursor: pointer;">Watch All</p>
+    </div>
+    <div style="overflow-y: scroll;">
+      {% for f in allfollowers%}
+      <div style="display: flex;flex-direction: row;margin: 0 0 1.5vh 0.75vw;">
+        <div style="background: linear-gradient(to bottom right, #6600cc 10%, #ff6600 90%); width: 40px;height: 40px; border-radius: 50%; justify-content: center;text-align: center;align-items: center;line-height: 38px;">
+          <a href="{{url_for('users.show',username = f.profile.username)}}">
+
+            <img
+              src="{{f.profile.image_path}}"
+              alt=""
+              style="width: 38px;height: 38px;cursor: pointer;border-radius: 50%;"          
+            />
+          </a>
+        </div>
+
+        <div style=" display: flex; flex-direction: column;">
+          <p style="margin: 0 0 0 0.5vw ;font-size: 14px;">{{f.profile.username}}</p style="margin: 0 0 0 0 ;">
+          <p style="margin: 0 0 0 0.5vw ;font-size: 12px; color: #c2c2c2;">{{f.profile.name}}</p style="margin: 0 0 0 0 ;">
+         
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+  <div style="background-color: white;border: 1px solid #c2c2c2; width: 20vw; height: 28.5vh; position: fixed; top: 56%; left: 64%; border-radius: 4px; display: flex; flex-direction: column;">
+    <div style="display: flex; flex-direction: row; padding: 1vh 1vw 0 1vw;">
+      <p style="color: #a1a1a1; font-size: 13px;">Suggestions For You</p>
+    </div>
+    {%for p in current_user.not_following%}
+    <p>{{p.name}}</p>
+    {%endfor%}
+  </div>
+
 
 {% endblock %}

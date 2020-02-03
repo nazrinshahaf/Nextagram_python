@@ -5,6 +5,7 @@ from flask_login import UserMixin,current_user, login_user
 import re
 from playhouse.hybrid import hybrid_property
 from config import S3_LOCATION
+from models.followers import *
 
 
 class User(BaseModel,UserMixin):
@@ -14,7 +15,24 @@ class User(BaseModel,UserMixin):
     email = pw.CharField(unique=True, null=True)
     profile_image = pw.TextField(null = True, default = 'defualt.png')
     is_private = pw.BooleanField(default = False)
-        
+
+    @hybrid_property
+    def image_path(self):
+        return S3_LOCATION + self.profile_image
+
+    @hybrid_property
+    def my_followers(self):
+        return [x.follower for x in self.followers]
+
+    @hybrid_property
+    def my_followings(self):
+        return [x.followed for x in self.following]
+
+    @hybrid_property
+    def not_following(self):
+        return [x for x in User.select(User).join(Followers, JOIN.LEFT_OUTER, on=(User.id == Followers.follower_id)).where(Followers.follower != self.id, Followers.follower != x)]    
+    
+
     def validate(self):
         duplicate_username = User.get_or_none(User.username == self.username)
         duplicate_email = User.get_or_none(User.email == self.email)
@@ -62,6 +80,4 @@ class User(BaseModel,UserMixin):
         else:
             self.password = generate_password_hash(self.password)
 
-    @hybrid_property
-    def image_path(self):
-        return S3_LOCATION + self.profile_image
+  

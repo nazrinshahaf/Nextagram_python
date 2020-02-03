@@ -39,7 +39,7 @@
     {% block navbar %}
 
     <nav
-      style="display: flex; flex-direction: row;padding: 2vh 2vw 0.5vh 2vw; justify-content: space-between;border-bottom: 1px solid #c3c3c3;"
+      style="display: flex; flex-direction: row;padding: 2vh 2vw 0.5vh 2vw; justify-content: space-between;border-bottom: 1px solid #c3c3c3;position: fixed;width: 100%;background-color: white;"
     >
       <div style="display: flex; flex-direction: row;">
         <a href="{{url_for('home')}}">
@@ -49,9 +49,12 @@
             style="width: 30px;height: 30px;cursor: pointer;"
           />
         </a>
+        <div
+          style="width: 1px;height: 30px;background-color: #c2c2c2; margin: 0 0 0 1vw;"
+        ></div>
         <a id="Nextagram_text" href="{{url_for('home')}}">
           <p
-            style="cursor: pointer;font-size: 18px;margin: 0 0 0 2vw; color: black;"
+            style="cursor: pointer;font-size: 18px;margin: 0 0 0 1vw; color: black;"
           >
             Nextagram
           </p>
@@ -121,6 +124,9 @@
     {% endblock %} {% with messages = get_flashed_messages() %} {% if messages
     %} {% for message in messages %}
     <p style="margin: 2vh 0 0 5vw; color: #ed4956;">{{ message }}</p>
-    {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
+    {% endfor %} {% endif %} {% endwith %}
+    <div style="padding: 8.5vh 0 0 0;">
+      {% block content %} {% endblock %}
+    </div>
   </body>
 </html>
