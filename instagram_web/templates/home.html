@@ -59,7 +59,7 @@
           />
         </div>
       </div>
-      <div style="margin: 0.3vh 0 0 1vw;font-size: 14px;color: #c2c2c2;">Posted at {{f.profile.user_posts[0].created_at.strftime('%d-%m-%Y')}}</div>
+      <div style="margin: 0.3vh 0 0 1vw;font-size: 14px;color: #c2c2c2;">Posted on {{f.profile.user_posts[0].created_at.strftime('%b %d %Y')}}</div>
     </div>
     <div><input / style="width: 52vw;outline: none; border: none; height: 7vh; color: #c2c2c2; padding:0 0 0 1vw; font-size: 15px;" placeholder="Add a comment.."
       onfocus="this.placeholder = ''"
@@ -147,7 +147,7 @@
       <div style="margin: 0 1vw 0 0; padding: 1vh 0 0 0;">
        <form action="{{url_for('users.follow', username=p.username)}}" method="POST">
          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-         <button style="cursor: pointer;font-size: 14px; margin: 0; background: none;border: none;color: #3897f0;">
+         <button style="cursor: pointer;font-size: 14px; margin: 0; background: none;border: none;color: #3897f0;cursor: pointer;">
             Follow
          </button>
         </form>  
