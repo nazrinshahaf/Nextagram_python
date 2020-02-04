@@ -1,11 +1,12 @@
 from models.base_model import BaseModel
 import peewee as pw
+from peewee import JOIN
 from werkzeug.security import generate_password_hash
 from flask_login import UserMixin,current_user, login_user
 import re
 from playhouse.hybrid import hybrid_property
 from config import S3_LOCATION
-from models.followers import *
+
 
 
 class User(BaseModel,UserMixin):
@@ -29,9 +30,17 @@ class User(BaseModel,UserMixin):
         return [x.followed for x in self.following]
 
     @hybrid_property
-    def not_following(self):
-        return [x for x in User.select(User).join(Followers, JOIN.LEFT_OUTER, on=(User.id == Followers.follower_id)).where(Followers.follower != self.id, Followers.follower != x)]    
-    
+    def my_not_following(self):
+        followings = [x.followed for x in self.following]
+        all_users = [x for x in User.select().where(User.id != self.id)]
+
+        return [value for value in all_users if value not in followings]
+
+    @hybrid_property
+    def user_posts(self):
+        from models.user_images import User_images
+        return [x for x in User_images.select().join(User).where(User.id == self.id).order_by(User_images.created_at.desc())]
+
 
     def validate(self):
         duplicate_username = User.get_or_none(User.username == self.username)
